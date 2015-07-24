@@ -6,15 +6,6 @@ export PATH=$HOME/.vertx/bin:$PATH
 alias mysql=/usr/local/mysql/bin/mysql
 alias mysqladmin=/usr/local/mysql/bin/mysqladmin
 
-eval "$(/Users/goos/dev/hemnet/hemnet-terminal-command/bin/hemnet init -)"
-
-# Laravel
-export PATH=$PATH:$HOME/.composer/vendor/bin
-
-# Golang
-export GOPATH=$HOME/dev/go
-export PATH=$PATH:$GOPATH/bin
-
 # RabbitMQ
 export PATH=$PATH:/usr/local/sbinexport 
 
@@ -24,14 +15,13 @@ export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-source ~/.profile
-
-if [ -f ~/.git-completion.bash ]; then
-    source ~/.git-completion.bash
+# git tab completion (homebrew)
+if [ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
+    . `brew --prefix`/etc/bash_completion.d/git-completion.bash
 fi
 
-if [ -f ~/.git-prompt.sh ]; then
-    source ~/.git-prompt.sh
+if [ -f `brew --prefix`/etc/bash_completion.d/git-prompt.sh ]; then
+    . `brew --prefix`/etc/bash_completion.d/git-prompt.sh
 fi
 
 #  by Mike Stewart - http://MediaDoneRight.com
