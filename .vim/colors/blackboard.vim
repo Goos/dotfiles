@@ -16,12 +16,13 @@ let g:colors_name = "blackboard"
 
 if has("gui_running")
   "GUI Colors
-  highlight Normal guifg=White   guibg=#0B1022
+  highlight Normal guifg=White   guibg=#272822 
+  highlight Visual guibg=#7E7E60 
   highlight Cursor guifg=Black   guibg=Yellow
   highlight CursorLine guibg=#191E2F
   highlight LineNr guibg=#323232 guifg=#888888
   highlight Folded guifg=#f1f3e8 guibg=#444444
-  highlight Pmenu guibg=#84A7C1
+  highlight Pmenu guibg=#34362e
 
   "General Colors
   highlight Comment guifg=#AEAEAE
