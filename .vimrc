@@ -9,6 +9,7 @@ set wrapscan
 set wildmenu
 
 set number
+let g:netrw_preview = 1
 
 set tabstop=2     " a tab is two spaces
 set backspace=indent,eol,start
@@ -22,6 +23,9 @@ set shiftwidth=2
 set softtabstop=2
 
 set backspace=indent,eol,start
+
+set backupdir=~/.vim/backup
+set backup
 
 colorscheme blackboard
 

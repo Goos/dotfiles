@@ -1,0 +1,3 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_1='/Users/goos/dev/hemnet/hemnet-ios/HemnetAPI/Resources/HemnetAPICoreData.xcdatamodeld/HemnetAPICoreData 1.1.2.xcdatamodel'

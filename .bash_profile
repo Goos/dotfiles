@@ -1,5 +1,12 @@
-export PATH=/usr/local/sbin:$PATH
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+# Dart pub
+export PATH="$PATH":"~/.pub-cache/bin"
+
+# Something else
+export tPATH=/usr/local/sbin:$PATH
+
+# Vertx
 export PATH=$HOME/.vertx/bin:$PATH
 
 #MYSQL shell commands
@@ -120,3 +127,5 @@ else \
   # @2 - Prompt when not in GIT repo
   echo "'$IBlue\|$IWhite$PathShort$IBlue\|$Color_Off'» "; \
 fi)'
+
+eval "$(/Users/goos/dev/hemnet/hemnet-terminal-command/bin/hemnet init - bash)"
