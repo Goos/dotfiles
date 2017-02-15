@@ -1,5 +1,9 @@
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+# Case-insensitive completion
+bind "set completion-ignore-case on"
+bind "set show-all-if-ambiguous on"
+
 # Dart pub
 export PATH="$PATH":"~/.pub-cache/bin"
 
@@ -128,4 +132,3 @@ else \
   echo "'$IBlue\|$IWhite$PathShort$IBlue\|$Color_Off'» "; \
 fi)'
 
-eval "$(/Users/goos/dev/hemnet/hemnet-terminal-command/bin/hemnet init - bash)"
