@@ -1,0 +1,24 @@
+" Adding a shortcut to jump to EOL while in insert-mode.
+inoremap <C-e> <C-o>$
+
+" xcode-like searching. 
+set incsearch
+set ignorecase
+set smartcase
+set wrap
+set wrapscan
+
+" xcode-like indentation.
+set smartindent
+set tabstop=4
+set expandtab 
+set softtabstop=4
+set backspace=indent,eol,start
+set shiftwidth=4
+set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+
+" supposedly makes xvim use the system pasteboard.
+set pasteboard
+
+nmap gc :action ShowUsages<CR>
+nmap gi :action GotoImplementation<CR>

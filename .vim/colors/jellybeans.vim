@@ -117,6 +117,25 @@ else
   let s:termBlack = "Grey"
 endif
 
+" When `termguicolors` is set, Vim[^1] ignores `guibg=NONE` after
+" `guibg` is already set to a color. See:
+"
+" - https://github.com/vim/vim/issues/981
+" - https://github.com/nanotech/jellybeans.vim/issues/64
+"
+" To work around this, ensure we don't set the default background
+" color before an override changes it to `NONE` by ensuring that the
+" background color isn't set to a value different from its override.
+"
+" [^1]: Tested on 8.0.567. Does not apply to Neovim.
+"
+" TODO: Enable this behavior for all highlights by applying
+"       overrides before calling highlight commands.
+"
+if has_key(s:overrides, "background") && has_key(s:overrides["background"], "guibg")
+    let s:background_color = s:overrides["background"]["guibg"]
+endif
+
 " Color approximation functions by Henry So, Jr. and David Liang {{{
 " Added to jellybeans.vim by Daniel Herbert
 
@@ -274,7 +293,7 @@ endfun
 fun! s:color(r, g, b)
   " map greys directly (see xterm's 256colres.pl)
   if &t_Co == 256 && a:r == a:g && a:g == a:b && a:r > 3 && a:r < 243
-    return float2nr(round(a:r - 8) / 10.0) + 232
+    return (a:r - 8) / 10 + 232
   endif
 
   " get the closest grey
@@ -383,7 +402,7 @@ if version >= 700
 
   call s:X("TabLine","000000","b0b8c0","italic","",s:termBlack)
   call s:X("TabLineFill","9098a0","","","",s:termBlack)
-  call s:X("TabLineSel","000000","ccd2d7","italic,bold",s:termBlack,"White")
+  call s:X("TabLineSel","000000","f0f0f0","italic,bold",s:termBlack,"White")
 
   " Auto-completion
   call s:X("Pmenu","ffffff","606060","","White",s:termBlack)
@@ -398,7 +417,7 @@ call s:X("CursorLineNr","ccc5c4","","NONE","White","")
 call s:X("Comment","888888","","italic","Grey","")
 call s:X("Todo","c7c7c7","","bold","White",s:termBlack)
 
-call s:X("StatusLine","000000","a7a1a9","italic","","White")
+call s:X("StatusLine","000000","dddddd","italic","","White")
 call s:X("StatusLineNC","ffffff","403c41","italic","White","Black")
 call s:X("VertSplit","777777","403c41","",s:termBlack,s:termBlack)
 call s:X("WildMenu","f0a0c0","302028","","Magenta","")
@@ -666,3 +685,4 @@ delf s:grey_color
 delf s:grey_level
 delf s:grey_number
 " }}}
+

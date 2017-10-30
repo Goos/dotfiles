@@ -1,6 +1,23 @@
 -- init grid
+
+local function getGridMargins()
+  local frame = hs.screen.mainScreen():frame()
+  if frame.h >= 1080 then
+    return { frame.w * 0.08, frame.h * 0.08 }
+  else
+    return { frame.w * 0.025, frame.h * 0.02 }
+  end
+end
+
+local function updateGridMargins()
+  hs.grid.setMargins(getGridMargins())
+end
+
 hs.grid.setGrid'8x8'
-hs.grid.setMargins{0, 0}
+updateGridMargins()
+
+-- update grid margins on resolution change
+hs.screen.watcher.new(updateGridMargins):start()
 
 -- disable animation
 hs.window.animationDuration = 0
@@ -119,3 +136,4 @@ end
 
 -- start app launch watcher
 hs.application.watcher.new(auto_tile):start()
+
