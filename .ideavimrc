@@ -17,8 +17,8 @@ set backspace=indent,eol,start
 set shiftwidth=4
 set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
 
-" supposedly makes xvim use the system pasteboard.
-set pasteboard
-
+" shows callers
 nmap gc :action ShowUsages<CR>
+" goes to implementation
 nmap gi :action GotoImplementation<CR>
+" gd goes to definition by default
