@@ -1,5 +1,13 @@
 syntax on
 
+" Localization
+set langmenu=en_US.UTF-8
+if has('unix')
+    language messages C
+else
+    language messages en
+endif
+
 " searching
 set incsearch
 set ignorecase
@@ -9,12 +17,15 @@ set nohlsearch
 
 " text wrapping
 set wrap
+set linebreak
+set nolist
+set formatoptions-=t
+
 set wildmenu
 if exists("&wildignorecase")
     set wildignorecase
 endif
 
-set scrolloff=999
 set number
 let g:netrw_preview=1
 
@@ -28,42 +39,61 @@ set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
 set expandtab
 set softtabstop=4
 
+set cursorline
+
 set backupdir=~/.vim/backup
 set backup
 
-colorscheme jellybeans
-if (has("termguicolors"))
- set termguicolors
+" set vim to chdir for each file
+"if exists('+autochdir')
+"    set autochdir
+"else
+"    autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+"endif
+
+set background=dark
+set termguicolors
+colorscheme deep-space
+
+" writing conf
+let g:goyo_width=80
+
+function! s:goyo_enter()
+    set scrolloff=999
+    set tw=80
+    set fo=cqt
+    set spell
+endfunction
+
+function! s:goyo_leave()
+   set scrolloff=5
+   set tw=0
+   set fo=cq
+   set nospell
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
 endif
-
-let g:python_host_prog = '/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python'
-
-let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
 
 set directory=~/.vim/tmp//,/tmp
 
 " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <C-k> :Ack! 
+nnoremap <silent> <C-p> :FZF<CR> 
 
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
-call plug#begin('~/.vim/plugged')
+map <Leader> <Plug>(easymotion-prefix)
 
-Plug 'critiqjo/lldb.nvim'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'vim-syntastic/syntastic'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+set rtp+=/usr/local/opt/fzf
 
-call plug#end() 
+packloadall
+silent! helptags ALL
 
-let g:deoplete#enable_at_startup = 1
-
-let g:clang_complete_auto = 0 
-let g:clang_use_library = 1
-let g:clang_periodic_quickfix = 0
-let g:clang_close_preview = 1
-
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+execute pathogen#infect()

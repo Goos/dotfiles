@@ -1,0 +1,10 @@
+#!/bin/bash
+
+dateString=$(date '+%Y-%m-%d')
+filePath=~/Documents/.writing/$dateString.md
+
+if [ ! -f $filePath ]; then
+    echo "# $dateString" > $filePath
+fi
+
+vi $filePath -c 'Goyo'

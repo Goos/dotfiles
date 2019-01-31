@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/Users/goos/dev/Spotify/app-integration-insights'
+let g:netrw_dirhist_2='/Users/goos'
+let g:netrw_dirhist_3='/Users/goos/dev/Spotify/client-android'
+let g:netrw_dirhist_4='/Users/goos/dev/Spotify/spotify-ios-sdk/spotify-auth'
+let g:netrw_dirhist_5='/Users/goos/dev/Spotify/spotify-ios-sdk/spotify-auth/SPTLogin'

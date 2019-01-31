@@ -1,16 +1,26 @@
+alias trim="awk '{\$1=\$1};1'"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH=/Users/goos/.oh-my-zsh
+
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+
+export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
+export IDF_PATH=$HOME/esp/esp-idf
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
+#ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git, z, zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -38,7 +48,7 @@ POWERLEVEL9K_MODE='flat'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER='.'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status)
+# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status)
 
 POWERLEVEL9K_TIME_FOREGROUND='226'
 POWERLEVEL9K_TIME_BACKGROUND='025'
@@ -57,33 +67,35 @@ POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='024'
 POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='226'
 POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='024'
 
-function zle-line-init {
-  powerlevel9k_prepare_prompts
-  if (( ${+terminfo[smkx]} )); then
-      printf '%s' ${terminfo[smkx]}
-  fi
-  zle reset-prompt
-  zle -R
-}
-
-function zle-line-finish {
-    powerlevel9k_prepare_prompts
-    if (( ${+terminfo[rmkx]} )); then
-        printf '%s' ${terminfo[rmkx]}
-     fi
-    zle reset-prompt
-    zle -R
-}
-
-function zle-keymap-select {
-    powerlevel9k_prepare_prompts
-    zle reset-prompt
-    zle -R
-}
-
-zle -N zle-line-init
-zle -N ale-line-finish
-zle -N zle-keymap-select
+# function zle-line-init {
+#   powerlevel9k_prepare_prompts
+#   if (( ${+terminfo[smkx]} )); then
+#       printf '%s' ${terminfo[smkx]}
+#   fi
+#   zle reset-prompt
+#   zle -R
+# }
+# 
+# function zle-line-finish {
+#     powerlevel9k_prepare_prompts
+#     if (( ${+terminfo[rmkx]} )); then
+#         printf '%s' ${terminfo[rmkx]}
+#      fi
+#     zle reset-prompt
+#     zle -R
+# }
+# 
+# function zle-keymap-select {
+#     powerlevel9k_prepare_prompts
+#     zle reset-prompt
+#     zle -R
+# }
+# 
+# zle -N zle-line-init
+# zle -N ale-line-finish
+# zle -N zle-keymap-select
+PROMPT='%F{red}%n%f %F{172}%1~%f %F{yellow}λ%f '
+RPROMPT='[%F{yellow}%t%f]'
 
 # Use vim cli mode
 bindkey '^P' up-history
@@ -106,7 +118,7 @@ if (( $+commands[tag] )); then
     alias ag=tag
 fi
 
-alias top='top -o cpu'
+alias top='htop'
 
 alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
 
@@ -114,3 +126,10 @@ export USE_CCACHE=1
 
 export ANDROID_NDK=~/android-ndk-r15c
 alias ndk-build=$ANDROID_NDK/ndk-build
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/goos/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/goos/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/goos/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/goos/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+

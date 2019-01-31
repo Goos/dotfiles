@@ -2,10 +2,11 @@
 
 local function getGridMargins()
   local frame = hs.screen.mainScreen():frame()
+  -- return { 0.0, 0.0 }
   if frame.h >= 1080 then
-    return { frame.w * 0.08, frame.h * 0.08 }
+    return { frame.w * 0.05, frame.h * 0.05 }
   else
-    return { frame.w * 0.025, frame.h * 0.02 }
+    return { 0.0, 0.0 }
   end
 end
 
