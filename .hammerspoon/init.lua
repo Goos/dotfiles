@@ -2,10 +2,9 @@
 
 local function getGridMargins()
   local frame = hs.screen.mainScreen():frame()
-  -- return { 0.0, 0.0 }
-  if frame.h >= 1080 then
-    return { frame.w * 0.05, frame.h * 0.05 }
-  else
+   if frame.h >= 1080 then
+     return { frame.w * 0.03, frame.h * 0.05 }
+   else
     return { 0.0, 0.0 }
   end
 end
@@ -97,6 +96,30 @@ local function bottomRight(grid)
   grid.x = width / 2
 end
 
+local function thirdLeft(grid)
+  local width, height = getGridSize()
+  grid.h = height
+  grid.w = width / 3
+  grid.y = 0
+  grid.x = 0
+end
+
+local function thirdMid(grid)
+  local width, height = getGridSize()
+  grid.h = height
+  grid.w = width / 3
+  grid.y = 0
+  grid.x = width / 3
+end
+
+local function thirdRight(grid)
+  local width, height = getGridSize()
+  grid.h = height
+  grid.w = width / 3
+  grid.y = 0
+  grid.x = (width / 3) * 2
+end
+
 -- snapping windows
 hs.hotkey.bind(mash, 'return', hs.grid.maximizeWindow)
 hs.hotkey.bind(mash, 'H', function () hs.grid.adjustWindow(halfLeft) end)
@@ -107,6 +130,9 @@ hs.hotkey.bind(mash_ctrl, 'Y', function () hs.grid.adjustWindow(topLeft) end)
 hs.hotkey.bind(mash_ctrl, 'P', function () hs.grid.adjustWindow(topRight) end)
 hs.hotkey.bind(mash_ctrl, 'B', function () hs.grid.adjustWindow(bottomLeft) end)
 hs.hotkey.bind(mash_ctrl, '.', function () hs.grid.adjustWindow(bottomRight) end)
+hs.hotkey.bind(mash_ctrl, 'u', function () hs.grid.adjustWindow(thirdLeft) end)
+hs.hotkey.bind(mash_ctrl, 'i', function () hs.grid.adjustWindow(thirdMid) end)
+hs.hotkey.bind(mash_ctrl, 'o', function () hs.grid.adjustWindow(thirdRight) end)
 
 hs.hotkey.bind(mash, "'", function() hs.fnutils.map(hs.window.visibleWindows(), hs.grid.snap) end)
 
