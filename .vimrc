@@ -13,7 +13,7 @@ set incsearch
 set ignorecase
 set smartcase
 set wrapscan
-set nohlsearch
+set hlsearch
 
 " text wrapping
 set wrap
@@ -83,7 +83,6 @@ set directory=~/.vim/tmp//,/tmp
 
 " bind K to grep word under cursor
 nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>:cw<CR>
-nnoremap <C-k> :Ack! 
 nnoremap <silent> <C-p> :FZF<CR> 
 
 nmap <S-Enter> O<Esc>
@@ -97,3 +96,36 @@ packloadall
 silent! helptags ALL
 
 execute pathogen#infect()
+
+" Autocompletion
+
+" SourceKit-LSP configuration (for swift)
+if executable('sourcekit-lsp')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'sourcekit-lsp',
+        \ 'cmd': {server_info->['sourcekit-lsp']},
+        \ 'whitelist': ['swift'],
+        \ })
+endif
+
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+set completeopt=longest,menuone
+
+autocmd FileType swift setlocal omnifunc=lsp#complete
+
+imap <c-space> <Plug>(asyncomplete_force_refresh)
+
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>
+
+" open omni completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+" open user completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'

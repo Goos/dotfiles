@@ -1,20 +1,18 @@
 alias trim="awk '{\$1=\$1};1'"
+export ZSH=/Users/robingoos/.oh-my-zsh
+
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ZSH=/Users/goos/.oh-my-zsh
-
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-
 export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
+export PATH="$PATH:$HOME/dev/sourcekit-lsp/.build/debug"
+export PATH="$PATH:$HOME/dev/android-platform-tools"
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
 export IDF_PATH=$HOME/esp/esp-idf
+export PATH="/usr/local/anaconda3/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="powerlevel9k/powerlevel9k"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -22,16 +20,12 @@ export NVM_DIR="$HOME/.nvm"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git, z, zsh-autosuggestions)
 
+source $HOME/.cargo/env
 source $ZSH/oh-my-zsh.sh
 
-# Editor flags
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
-
 alias vi=nvim
+alias vfzf='vi $(fzf)'
+export EDITOR='vi'
 
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
@@ -43,59 +37,10 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 bindkey -v
 export KEYTIMEOUT=0.4
 
-# Powerline settings
-POWERLEVEL9K_MODE='flat'
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_SHORTEN_DELIMITER='.'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir)
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status)
-
-POWERLEVEL9K_TIME_FOREGROUND='226'
-POWERLEVEL9K_TIME_BACKGROUND='025'
-POWERLEVEL9K_DIR_HOME_FOREGROUND='226'
-POWERLEVEL9K_DIR_HOME_BACKGROUND='024'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='226'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='024'
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='226'
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='024'
-POWERLEVEL9K_STATUS_OK_FOREGROUND='green'
-POWERLEVEL9K_STATUS_OK_BACKGROUND='025'
-POWERLEVEL9K_STATUS_ERROR_FOREGROUND='green'
-POWERLEVEL9K_STATUS_ERROR_BACKGROUND='025'
-POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='226'
-POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='024'
-POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='226'
-POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='024'
-
-# function zle-line-init {
-#   powerlevel9k_prepare_prompts
-#   if (( ${+terminfo[smkx]} )); then
-#       printf '%s' ${terminfo[smkx]}
-#   fi
-#   zle reset-prompt
-#   zle -R
-# }
-# 
-# function zle-line-finish {
-#     powerlevel9k_prepare_prompts
-#     if (( ${+terminfo[rmkx]} )); then
-#         printf '%s' ${terminfo[rmkx]}
-#      fi
-#     zle reset-prompt
-#     zle -R
-# }
-# 
-# function zle-keymap-select {
-#     powerlevel9k_prepare_prompts
-#     zle reset-prompt
-#     zle -R
-# }
-# 
 # zle -N zle-line-init
 # zle -N ale-line-finish
 # zle -N zle-keymap-select
-PROMPT='%F{red}%n%f %F{172}%1~%f %F{yellow}λ%f '
-RPROMPT='[%F{yellow}%t%f]'
+PROMPT='%F{172}%1~%f %F{yellow}λ%f '
 
 # Use vim cli mode
 bindkey '^P' up-history
@@ -133,3 +78,12 @@ if [ -f '/Users/goos/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/U
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/goos/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/goos/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
+
+export KEYTIMEOUT=1
+
+# Envoy stuff
+
+alias start_hotel='sudo launchctl unload /Library/LaunchDaemons/hotel.plist && sudo launchctl load /Library/LaunchDaemons/hotel.plist > /dev/null'
+alias stop_hotel='sudo launchctl unload /Library/LaunchDaemons/hotel.plist > /dev/null'
+alias start_pgsql='pg_ctl -D /usr/local/var/postgres start'
+alias stop_pgsql='pg_ctl -D /usr/local/var/postgres stop'
