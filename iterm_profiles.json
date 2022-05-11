@@ -20,7 +20,7 @@
     "Green Component" : 0.65774393081665039
   },
   "Use Italic Font" : true,
-  "HotKey Characters" : "k",
+  "HotKey Characters" : "`",
   "Foreground Color" : {
     "Red Component" : 0.53509843349456787,
     "Color Space" : "Calibrated",
@@ -85,7 +85,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.39918917417526245
   },
-  "Shortcut" : "",
+  "Shortcut" : "A",
   "Background Image Location" : "",
   "Bold Color" : {
     "Red Component" : 0.6923748254776001,
@@ -97,7 +97,7 @@
   "guid" : "123",
   "Unlimited Scrollback" : false,
   "Custom Command" : "No",
-  "HotKey Key Code" : 40,
+  "HotKey Key Code" : 50,
   "Keyboard Map" : {
     "0xf700-0x260000" : {
       "Text" : "[1;6A",
@@ -277,7 +277,7 @@
   "Send Code When Idle" : false,
   "ASCII Anti Aliased" : true,
   "Tags" : [
-    "Dynamic"
+
   ],
   "Ansi 9 Color" : {
     "Red Component" : 0.7036135196685791,
@@ -324,7 +324,7 @@
   },
   "Name" : "Hotkey Window",
   "Blinking Cursor" : false,
-  "Guid" : "FEF0EA3A-041A-48B8-AD30-77FD1A3F02E1",
+  "Guid" : "1B328B9E-B4AE-4010-9881-C4ACC9EDA78F",
   "Idle Code" : 0,
   "Ansi 10 Color" : {
     "Red Component" : 0.48825448751449585,
@@ -398,7 +398,8 @@
     "Green Component" : 0.094133734703063965
   },
   "Screen" : 0,
-  "HotKey Characters Ignoring Modifiers" : "k",
+  "Initial Use Transparency" : false,
+  "HotKey Characters Ignoring Modifiers" : "`",
   "Non Ascii Font" : "Monaco 12",
   "Ansi 13 Color" : {
     "Red Component" : 0.60428434610366821,

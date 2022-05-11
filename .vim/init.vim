@@ -1,1 +1,1 @@
-/Users/goos/.vimrc
+/Users/robingoos/.vimrc

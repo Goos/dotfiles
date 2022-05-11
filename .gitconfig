@@ -1,0 +1,21 @@
+[credential]
+	helper = store
+[alias]
+	st = status
+[core]
+	excludesfile = /Users/robingoos/.gitignore
+	editor = vi
+[user]
+	name = Robin Goos
+	email = mail@robingoos.com
+[difftool]
+	prompt = false
+[mergetool]
+	prompt = false
+[diff]
+	tool = vimdiff
+[pull]
+	rebase = true
+[alias]
+    stash-search = "!f() { git show $(git stash list | cut -d\":\" -f 1) | grep \"$@\" ; }; f" 
+

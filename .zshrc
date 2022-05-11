@@ -1,14 +1,14 @@
 alias trim="awk '{\$1=\$1};1'"
 export ZSH=/Users/robingoos/.oh-my-zsh
 
+export PATH=~/.npm-global/bin:$PATH
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
 export PATH="$PATH:$HOME/dev/sourcekit-lsp/.build/debug"
 export PATH="$PATH:$HOME/dev/android-platform-tools"
+export PATH="$PATH:$HOME/go/bin"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-export IDF_PATH=$HOME/esp/esp-idf
-export PATH="/usr/local/anaconda3/bin:$PATH"
+# export PATH="/usr/local/anaconda3/bin:$PATH"  # commented out by conda initialize
 
 export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -87,3 +87,21 @@ alias start_hotel='sudo launchctl unload /Library/LaunchDaemons/hotel.plist && s
 alias stop_hotel='sudo launchctl unload /Library/LaunchDaemons/hotel.plist > /dev/null'
 alias start_pgsql='pg_ctl -D /usr/local/var/postgres start'
 alias stop_pgsql='pg_ctl -D /usr/local/var/postgres stop'
+
+eval "$(direnv hook zsh)"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/local/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/usr/local/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/local/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
