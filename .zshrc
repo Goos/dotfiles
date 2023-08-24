@@ -14,6 +14,9 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
+# direnv
+eval "$(direnv hook zsh)"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -35,7 +38,11 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # vi-mode
 bindkey -v
-export KEYTIMEOUT=0.4
+" Make vi-mode transitions faster
+export KEYTIMEOUT=1
+
+# Speed up VCS status
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # zle -N zle-line-init
 # zle -N ale-line-finish
@@ -65,30 +72,12 @@ fi
 
 alias top='htop'
 
-alias lock='/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend'
-
-export USE_CCACHE=1
-
-export ANDROID_NDK=~/android-ndk-r15c
-alias ndk-build=$ANDROID_NDK/ndk-build
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/goos/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/goos/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/goos/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/goos/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
-
-export KEYTIMEOUT=1
-
 # Envoy stuff
 
 alias start_hotel='sudo launchctl unload /Library/LaunchDaemons/hotel.plist && sudo launchctl load /Library/LaunchDaemons/hotel.plist > /dev/null'
 alias stop_hotel='sudo launchctl unload /Library/LaunchDaemons/hotel.plist > /dev/null'
 alias start_pgsql='pg_ctl -D /usr/local/var/postgres start'
 alias stop_pgsql='pg_ctl -D /usr/local/var/postgres stop'
-
-eval "$(direnv hook zsh)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
