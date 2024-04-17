@@ -200,4 +200,4 @@ alt + cmd - l : yabai -m window --resize right:50:0; \
 
 
 # toggle sticky(+float), topmost, picture-in-picture
-# alt - p : yabai -m window --toggle sticky --toggle topmost --toggle pip
+alt - p : yabai -m window --toggle sticky --toggle topmost --toggle pip
