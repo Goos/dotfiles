@@ -1,0 +1,11 @@
+{
+  "cmp-emoji": { "branch": "main", "commit": "e8398e2adf512a03bb4e1728ca017ffeac670a9f" },
+  "everforest-nvim": { "branch": "main", "commit": "4f41a53d69b679c9bf770da76129d78754d8d8c0" },
+  "lazy.nvim": { "branch": "main", "commit": "56ead98e05bb37a4ec28930a54d836d033cf00f2" },
+  "mini.icons": { "branch": "main", "commit": "54686be7d58807906cb2c8c2216e0bf9c044f19a" },
+  "neoscroll.nvim": { "branch": "master", "commit": "e58ecc61e38f348dcc8f2af037fe7031f8a6ef7c" },
+  "nvim-cmp": { "branch": "main", "commit": "be7bd4c5f860c79da97af3a26d489af50babfd4b" },
+  "oil.nvim": { "branch": "master", "commit": "99ce32f4a2ecf76263b72fcc31efb163faa1a941" },
+  "smear-cursor.nvim": { "branch": "main", "commit": "3cacbf0fa4ccefd4391ac47b7776444d2af08d46" },
+  "vim-startuptime": { "branch": "master", "commit": "ac2cccb5be617672add1f4f3c0a55ce99ba34e01" }
+}
