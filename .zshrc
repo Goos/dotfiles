@@ -37,13 +37,7 @@ function ff() {
   aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
 }
 
-# added by automated setup
-export ANDROID_SDK=/opt/android_sdk
-export ANDROID_NDK_REPOSITORY=/opt/android_ndk
-export ANDROID_HOME=${ANDROID_SDK}
-export PATH=${PATH}:${ANDROID_SDK}/emulator:${ANDROID_SDK}/tools:${ANDROID_SDK}/tools/bin:${ANDROID_SDK}/platform-tools
-export PATH="$HOME/homebrew/bin:$HOME/homebrew/sbin:$PATH"
-
 # paths
+export PATH="$HOME/homebrew/bin:$HOME/homebrew/sbin:$PATH"
 export PATH=$HOME/.bin:$PATH
 export PATH=/opt/llvm/bin:$PATH
