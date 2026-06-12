@@ -170,8 +170,6 @@ hl.config({
 		touchpad = {
 			natural_scroll = true,
 			disable_while_typing = true,
-			drag_lock = true,
-			["tap_and_drag"] = true,
 		},
 	},
 
@@ -182,6 +180,13 @@ hl.config({
 		movefocus_cycles_fullscreen = true,
 		window_direction_monitor_fallback = true,
 	},
+})
+
+-- Per-device: internal trackpad only (drag-lock / tap-and-drag)
+hl.device({
+	name = "SYNA8018:00 06CB:CE67 Touchpad",
+	drag_lock = true,
+	["tap_and_drag"] = true,
 })
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -280,6 +285,7 @@ hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("killall -SIGUSR2 waybar"))
 
 -- Window movement / focus
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "l" }))
 hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "r" }))
 hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "u" }))
@@ -330,6 +336,29 @@ hl.bind(mainMod .. " + minus", hl.dsp.window.move({ workspace = "special" }))
 hl.bind(mainMod .. " + equal", hl.dsp.workspace.toggle_special())
 hl.bind(mainMod .. " + F1", hl.dsp.workspace.toggle_special("scratchpad"))
 hl.bind(mainMod .. " + ALT + SHIFT + F1", hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }))
+
+-- Resize Submap (Super + R)
+hl.bind(mainMod .. " + r", hl.dsp.submap("resize"))
+hl.define_submap("resize", "Escape", function()
+	local step = 20
+	
+	-- Exit submap
+	hl.bind("Escape", hl.dsp.submap("reset"))
+	hl.bind("RETURN", hl.dsp.submap("reset"))
+	hl.bind("", hl.dsp.submap("reset"), { catchall = true })
+	
+	-- HJKL
+	hl.bind("h", hl.dsp.window.resize({ x = -step, y = 0, relative = true }), { repeating = true })
+	hl.bind("l", hl.dsp.window.resize({ x = step, y = 0, relative = true }), { repeating = true })
+	hl.bind("k", hl.dsp.window.resize({ x = 0, y = -step, relative = true }), { repeating = true })
+	hl.bind("j", hl.dsp.window.resize({ x = 0, y = step, relative = true }), { repeating = true })
+	
+	-- Arrow keys
+	hl.bind("left", hl.dsp.window.resize({ x = -step, y = 0, relative = true }), { repeating = true })
+	hl.bind("right", hl.dsp.window.resize({ x = step, y = 0, relative = true }), { repeating = true })
+	hl.bind("up", hl.dsp.window.resize({ x = 0, y = -step, relative = true }), { repeating = true })
+	hl.bind("down", hl.dsp.window.resize({ x = 0, y = step, relative = true }), { repeating = true })
+end)
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- WINDOW RULES
