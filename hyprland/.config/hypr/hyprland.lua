@@ -13,8 +13,8 @@ local colors = {
 	cachymblue   = "rgba(182545ff)",
 	cachydblue   = "rgba(111826ff)",
 	cachywhite   = "rgba(ffffffff)",
-	cachygrey    = "rgba(ddddddff)",
-	cachygray    = "rgba(798bb299)",
+	cachygrey    = "rgba(dddddd88)",
+	cachygray    = "rgba(798bb244)",
 }
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -35,7 +35,7 @@ terminal = "kitty"
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 hl.monitor({
-	output = "DP-5",
+	output = "desc:KUY Kuycon P20",
 	mode = "preferred",
 	position = "auto",
 	scale = "1.25",
@@ -45,7 +45,7 @@ hl.monitor({
 	output = "",
 	mode = "preferred",
 	position = "auto",
-	scale = "1",
+	scale = "1.0",
 })
 
 -- Lid switch handling
@@ -61,6 +61,7 @@ end)
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("QT_CURSOR_SIZE", "24")
+hl.env("ILLOGICAL_IMPULSE_VIRTUAL_ENV", os.getenv("HOME") .. "/.local/state/quickshell/.venv")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -69,17 +70,20 @@ hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'")
-	hl.exec_cmd("hyprpaper")
-	hl.exec_cmd("~/.config/hypr/scripts/waybar-launch.sh")
+	-- hl.exec_cmd("hyprpaper")
+	-- hl.exec_cmd("~/.config/hypr/scripts/waybar-launch.sh")
 	hl.exec_cmd("fcitx5 -d")
-	hl.exec_cmd("mako")
+	-- hl.exec_cmd("mako")
 	hl.exec_cmd("nm-applet --indicator")
-	hl.exec_cmd('bash -c "mkfifo /tmp/$HYPRLAND_INSTANCE_SIGNATURE.wob && tail -f /tmp/$HYPRLAND_INSTANCE_SIGNATURE.wob | wob & disown"')
-	hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
+	-- hl.exec_cmd('bash -c "mkfifo /tmp/$HYPRLAND_INSTANCE_SIGNATURE.wob && tail -f /tmp/$HYPRLAND_INSTANCE_SIGNATURE.wob | wob & disown"')
+	-- hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
 	hl.exec_cmd("systemctl --user import-environment")
 	hl.exec_cmd("hash dbus-update-activation-environment 2>/dev/null")
 	hl.exec_cmd("dbus-update-activation-environment --systemd")
 	hl.exec_cmd("hypridle")
+	
+	-- Start Quickshell
+	hl.exec_cmd("quickshell -c ii")
 end)
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -90,7 +94,7 @@ hl.config({
 	general = {
 		gaps_in = 3,
 		gaps_out = 5,
-		border_size = 2,
+		border_size = 1,
 		col = {
 			active_border = colors.cachygrey,
 			inactive_border = colors.cachygray,
@@ -164,7 +168,7 @@ hl.config({
 
 	input = {
 		kb_layout = "us,se",
-		kb_options = "grp:alt_shift_toggle",
+		-- kb_options = "grp:alt_shift_toggle",
 		follow_mouse = 2,
 		float_switch_override_focus = 2,
 		touchpad = {
@@ -227,11 +231,9 @@ hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 2.3, bezier = 
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- GESTURES
--- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 hl.gesture({ fingers = 4, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "down", action = "close" })
-hl.gesture({ fingers = 3, direction = "up", action = "fullscreen" })
+-- hl.gesture({ fingers = 3, direction = "up", action = "fullscreen" })
 hl.gesture({ fingers = 3, direction = "left", action = "float" })
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -241,59 +243,66 @@ hl.gesture({ fingers = 3, direction = "left", action = "float" })
 local mainMod = "SUPER"
 
 -- App shortcuts
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(filemanager))
-hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd('loginctl terminate-user ""'))
-hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(applauncher))
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
-hl.bind(mainMod .. " + Y", hl.dsp.window.pin())
-hl.bind(mainMod .. " + E", hl.dsp.layout("togglesplit"))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal), { description = "Apps: Terminal" })
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(filemanager), { description = "Apps: File Manager" })
+hl.bind(mainMod .. " + Q", hl.dsp.window.close(), { description = "Window: Close" })
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd('loginctl terminate-user ""'), { description = "System: Log Out" })
+hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }), { description = "Window: Toggle Float" })
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(applauncher), { description = "Apps: App Launcher" })
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }), { description = "Window: Toggle Fullscreen" })
+hl.bind(mainMod .. " + Y", hl.dsp.window.pin(), { description = "Window: Pin" })
+hl.bind(mainMod .. " + E", hl.dsp.layout("togglesplit"), { description = "Layout: Toggle Split" })
 
 -- Screenshots
-hl.bind("Print", hl.dsp.exec_cmd(shot_region))
-hl.bind("CTRL + Print", hl.dsp.exec_cmd(shot_window))
-hl.bind("ALT + Print", hl.dsp.exec_cmd(shot_screen))
+hl.bind("Print", hl.dsp.exec_cmd(shot_region), { description = "Screenshot: Region" })
+hl.bind("CTRL + Print", hl.dsp.exec_cmd(shot_window), { description = "Screenshot: Window" })
+hl.bind("ALT + Print", hl.dsp.exec_cmd(shot_screen), { description = "Screenshot: Full Screen" })
+hl.bind("ALT + SHIFT + 4", hl.dsp.exec_cmd("qs -p ~/.config/quickshell/ii ipc call region screenshot"), { description = "Screenshot: Quickshell Region" })
 
 -- Grouping
-hl.bind(mainMod .. " + Tab", hl.dsp.group.next())
+hl.bind(mainMod .. " + Tab", hl.dsp.group.next(), { description = "Group: Next Window" })
 
 -- Switch keyboard layout
-hl.bind(mainMod .. " + SHIFT + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout current next"), { locked = true })
+hl.bind(mainMod .. " + SHIFT + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout current next"), { description = "System: Next Keyboard Layout", locked = true })
 
 -- Toggle gaps
-hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd('hyprctl --batch "keyword general:gaps_out 5;keyword general:gaps_in 3"'))
-hl.bind(mainMod .. " + G", hl.dsp.exec_cmd('hyprctl --batch "keyword general:gaps_out 0;keyword general:gaps_in 0"'))
+hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd('hyprctl --batch "keyword general:gaps_out 5;keyword general:gaps_in 3"'), { description = "Layout: Restore Gaps" })
+hl.bind(mainMod .. " + G", hl.dsp.exec_cmd('hyprctl --batch "keyword general:gaps_out 0;keyword general:gaps_in 0"'), { description = "Layout: Remove Gaps" })
 
 -- Volume
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\\d+(?=%)' | awk '{if($1>100) system(\"pactl set-sink-volume @DEFAULT_SINK@ 100%\")}' && pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\\d+(?=%)' | awk '{print $1}' | head -1 > /tmp/$HYPRLAND_INSTANCE_SIGNATURE.wob"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\\d+(?=%)' | awk '{print $1}' | head -1 > /tmp/$HYPRLAND_INSTANCE_SIGNATURE.wob"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("amixer sset Master toggle | sed -En '/\\[on\\]/ s/.*\\[([0-9]+)%\\].*/\\1/ p; /\\[off\\]/ s/.*/0/p' | head -1 > /tmp/$HYPRLAND_INSTANCE_SIGNATURE.wob"), { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%"), { description = "Media: Volume Up", locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -5%"), { description = "Media: Volume Down", locked = true, repeating = true })
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("amixer sset Master toggle"), { description = "Media: Mute", locked = true, repeating = true })
 
 -- Playback
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { description = "Media: Play/Pause", locked = true })
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { description = "Media: Next Track", locked = true })
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { description = "Media: Previous Track", locked = true })
 
 -- Brightness
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s +5%"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s +5%"), { description = "Hardware: Brightness Up", locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), { description = "Hardware: Brightness Down", locked = true, repeating = true })
 
--- Waybar reload
-hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("killall -SIGUSR2 waybar"))
+-- Quickshell reload (replaced Waybar)
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("pkill quickshell; quickshell -c ii & disown"), { description = "Shell: Reload Quickshell" })
+
+-- Quickshell cheatsheet
+hl.bind(mainMod .. " + Slash", hl.dsp.global("quickshell:cheatsheetToggle"), { description = "Shell: Toggle Cheatsheet" })
+
+-- Quickshell overview
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("qs -p ~/.config/quickshell/ii ipc call search toggle"), { description = "Shell: Toggle Overview/Workspaces" })
 
 -- Window movement / focus
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
-hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "l" }))
-hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "r" }))
-hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "u" }))
-hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "d" }))
-hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { description = "Window: Drag", mouse = true })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { description = "Window: Resize", mouse = true })
+hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "l" }), { description = "Window: Move Left" })
+hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "r" }), { description = "Window: Move Right" })
+hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "u" }), { description = "Window: Move Up" })
+hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "d" }), { description = "Window: Move Down" })
+hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }), { description = "Focus: Move Left" })
+hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }), { description = "Focus: Move Right" })
+hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }), { description = "Focus: Move Up" })
+hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }), { description = "Focus: Move Down" })
 
 -- Display Focus Toggle (Super + Ctrl + 1-0)
 for i = 1, 9 do
@@ -325,20 +334,20 @@ hl.bind(mainMod .. " + 0", function()
 end)
 
 -- Workspace scrolling
-hl.bind(mainMod .. " + period", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + comma", hl.dsp.focus({ workspace = "e-1" }))
+-- hl.bind(mainMod .. " + period", hl.dsp.focus({ workspace = "e+1" }))
+-- hl.bind(mainMod .. " + comma", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
-hl.bind(mainMod .. " + slash", hl.dsp.focus({ workspace = "previous" }))
+-- hl.bind(mainMod .. " + slash", hl.dsp.focus({ workspace = "previous" }))
 
 -- Special workspaces
-hl.bind(mainMod .. " + minus", hl.dsp.window.move({ workspace = "special" }))
-hl.bind(mainMod .. " + equal", hl.dsp.workspace.toggle_special())
+hl.bind(mainMod .. " + minus", hl.dsp.window.move({ workspace = "special" }), { description = "Workspace: Move to Special" })
+hl.bind(mainMod .. " + equal", hl.dsp.workspace.toggle_special(), { description = "Workspace: Toggle Special" })
 hl.bind(mainMod .. " + F1", hl.dsp.workspace.toggle_special("scratchpad"))
 hl.bind(mainMod .. " + ALT + SHIFT + F1", hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }))
 
 -- Resize Submap (Super + R)
-hl.bind(mainMod .. " + r", hl.dsp.submap("resize"))
+hl.bind(mainMod .. " + r", hl.dsp.submap("resize"), { description = "Window: Enter Resize Mode" })
 hl.define_submap("resize", "Escape", function()
 	local step = 20
 	
@@ -498,7 +507,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "float-ws-border",
 	match = { workspace = "w[fv1-10]", float = true },
-	border_size = 2,
+	border_size = 1,
 })
 hl.window_rule({
 	name = "float-ws-rounding",
@@ -510,7 +519,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "tile-ws-border",
 	match = { workspace = "f[1-10]", float = false },
-	border_size = 3,
+	border_size = 1,
 })
 hl.window_rule({
 	name = "tile-ws-rounding",
@@ -542,5 +551,32 @@ hl.layer_rule({
 -- WORKSPACE RULES
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-hl.workspace_rule({ workspace = "w[tv1-10]", gaps_out = 5, gaps_in = 3 })
-hl.workspace_rule({ workspace = "f[1]", gaps_out = 5, gaps_in = 3 })
+local function apply_monitor_gaps(monitor)
+	local width = monitor.width
+	local gaps_out = 5
+	local gaps_in = 3
+	local rounding = 4
+	if width >= 3600 then
+		gaps_out = 20
+		gaps_in = 10
+		rounding = 14
+	elseif width >= 2560 then
+		gaps_out = 12
+		gaps_in = 6
+		rounding = 8
+	end
+	hl.workspace_rule({ workspace = "m[" .. monitor.name .. "]", gaps_out = gaps_out, gaps_in = gaps_in })
+	hl.window_rule({
+		name = "rounding_" .. monitor.name,
+		match = { workspace = "m[" .. monitor.name .. "]" },
+		rounding = rounding
+	})
+end
+
+for _, monitor in ipairs(hl.get_monitors()) do
+	apply_monitor_gaps(monitor)
+end
+
+hl.on("monitor.added", function(monitor)
+	apply_monitor_gaps(monitor)
+end)

@@ -23,7 +23,7 @@ if [ "$LID_STATE" = "close" ]; then
                     hl.dispatch(hl.dsp.workspace.move({ workspace = ws.id, monitor = ext }))
                 end
             end
-            hl.monitor({ output = laptop, mode = 'disable' })
+            hl.monitor({ output = laptop, disabled = true })
             hl.dispatch(hl.dsp.focus({ monitor = ext }))
         "
     else
@@ -31,5 +31,5 @@ if [ "$LID_STATE" = "close" ]; then
     fi
 elif [ "$LID_STATE" = "open" ]; then
     echo "Enabling $LAPTOP_MONITOR" >> "$LOG_FILE"
-    $HYPRCTL eval "hl.monitor({ output = '$LAPTOP_MONITOR', mode = 'preferred', position = 'auto', scale = '1' })"
+    $HYPRCTL eval "hl.monitor({ output = '$LAPTOP_MONITOR', disabled = false, mode = 'preferred', position = 'auto', scale = '1' })"
 fi
