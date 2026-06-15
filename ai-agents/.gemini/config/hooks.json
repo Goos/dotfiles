@@ -1,0 +1,10 @@
+{
+  "global-agents-prompt": {
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "/home/goos/.gemini/config/inject-agents.sh"
+      }
+    ]
+  }
+}
