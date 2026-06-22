@@ -64,6 +64,11 @@ Scope {
                 }
                 color: "transparent"
 
+                IdleInhibitor {
+                    window: barRoot
+                    enabled: Idle.inhibit
+                }
+
                 // Positioning
                 anchors {
                     top: !Config.options.bar.bottom

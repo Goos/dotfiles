@@ -32,3 +32,10 @@ source "$HOME/.cargo/env"
 
 # Added by Antigravity CLI installer
 export PATH="/home/goos/.local/bin:$PATH"
+
+# bun completions
+[ -s "/home/goos/.local/share/reflex/bun/_bun" ] && source "/home/goos/.local/share/reflex/bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.local/share/reflex/bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
